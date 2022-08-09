@@ -22,11 +22,22 @@ namespace Game.Scripts.Behaviours
         private Transform _objectGrabPointTransform;
         private float _lerpSpeed = 10f;
 
+        private Vector3 _additionalOffSetValue = Vector3.zero;
+
         private void Awake()
         {
             _objectRigidbody = GetComponent<Rigidbody>();
         }
-
+        
+        private void FixedUpdate()
+        {
+            if(_objectGrabPointTransform == null) return;
+            Vector3 newPosition = Vector3.Lerp(transform.position,
+                _objectGrabPointTransform.position + _additionalOffSetValue,
+                _lerpSpeed * Time.deltaTime);
+            _objectRigidbody.MovePosition(newPosition);
+        }
+        
         public void Grab(Transform grabPointTransform)
         {
             if (makeKinematicWhenGrabbed) _objectRigidbody.isKinematic = true;
@@ -41,11 +52,9 @@ namespace Game.Scripts.Behaviours
             _objectRigidbody.useGravity = true;
         }
 
-        private void FixedUpdate()
+        public void AddExtraOffSetValue(float value)
         {
-            if(_objectGrabPointTransform == null) return;
-            Vector3 newPosition = Vector3.Lerp(transform.position, _objectGrabPointTransform.position,_lerpSpeed * Time.deltaTime);
-            _objectRigidbody.MovePosition(newPosition);
+            _additionalOffSetValue += new Vector3(0, value, 0);
         }
     }
 }

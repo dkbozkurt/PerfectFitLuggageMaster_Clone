@@ -42,6 +42,22 @@ namespace Game.Scripts.Managers
                 DropObject();
             }
 
+            ChangeObjectPosition();
+        }
+
+        private void ChangeObjectPosition()
+        {
+            if(!_grabbableObject) return;
+            
+            if (Input.GetAxisRaw("Mouse ScrollWheel") > 0)
+            {
+                _grabbableObject.AddExtraOffSetValue(0.25f);
+            }
+            
+            if (Input.GetAxisRaw("Mouse ScrollWheel") < 0)
+            {
+                _grabbableObject.AddExtraOffSetValue(-0.25f);
+            }
         }
 
         private void PickUpObject()
