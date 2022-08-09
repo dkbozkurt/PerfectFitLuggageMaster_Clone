@@ -3055,7 +3055,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525490607}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 4.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1649356471}
@@ -3189,7 +3189,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1526838740}
   m_LocalRotation: {x: 0.19064863, y: -0, z: -0, w: 0.98165834}
-  m_LocalPosition: {x: 0, y: 3.32, z: -8.82}
+  m_LocalPosition: {x: 0, y: 3.32, z: -5.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3849,7 +3849,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2101587528}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 4.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 942071379}
@@ -3874,15 +3874,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3012083714939562480, guid: 7bb5857b38cc6eb4f8acaef3c4a5cf6a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.048
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3012083714939562480, guid: 7bb5857b38cc6eb4f8acaef3c4a5cf6a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.18
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3012083714939562480, guid: 7bb5857b38cc6eb4f8acaef3c4a5cf6a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.52
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3012083714939562480, guid: 7bb5857b38cc6eb4f8acaef3c4a5cf6a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3910,6 +3910,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3012083714939562480, guid: 7bb5857b38cc6eb4f8acaef3c4a5cf6a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6161562686035077175, guid: 7bb5857b38cc6eb4f8acaef3c4a5cf6a, type: 3}
+      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

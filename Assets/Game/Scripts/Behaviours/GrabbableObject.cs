@@ -24,23 +24,26 @@ namespace Game.Scripts.Behaviours
         [Header("Grabbable Properties")] 
         public int objectHeight;
         public List<GrabbableSlotBehaviour> grabbableSlotBehaviours;
-
+        
         private Rigidbody _objectRigidbody;
-        private Transform _objectGrabPointTransform;
+        [HideInInspector] public Transform objectGrabPointTransform;
         private float _lerpSpeed = 10f;
+
+        public List<ItemSlotBehaviour> itemSlots;
+        private Vector3 _pivotPointFirstPosition;
 
         private void Awake()
         {
             _objectRigidbody = GetComponent<Rigidbody>();
+            _pivotPointFirstPosition = grabbableSlotBehaviours[0].transform.localPosition;
             
-            if(objectHeight <= 0 )
-            Debug.LogError("Object height must be greater than 0.");
+            if(objectHeight <= 0 ) Debug.LogError("Object height must be greater than 0.");
         }
 
         public void Grab(Transform grabPointTransform)
         {
             if (makeKinematicWhenGrabbed) _objectRigidbody.isKinematic = true;
-            _objectGrabPointTransform = grabPointTransform;
+            objectGrabPointTransform = grabPointTransform;
             _objectRigidbody.useGravity = false;
         }
         
@@ -51,18 +54,32 @@ namespace Game.Scripts.Behaviours
         
         private void FixedUpdate()
         {
-            if(_objectGrabPointTransform == null) return;
+            if(objectGrabPointTransform == null) return;
             MoveObject();
         }
         
         public void SuccessDrop()
         {
+            Debug.Log("Success Drop");
+
+            if (grabbableSlotBehaviours.Count != itemSlots.Count)
+            {
+                FailDrop();
+                return;
+            }
+            
+            Vector3 pivotInterval = transform.localPosition - grabbableSlotBehaviours[0].transform.position;
+            grabbableSlotBehaviours[0].transform.position = itemSlots[0].transform.position;
+            transform.localPosition = grabbableSlotBehaviours[0].transform.position + pivotInterval;
+            grabbableSlotBehaviours[0].transform.localPosition = _pivotPointFirstPosition;
             
         }
 
         public void FailDrop()
         {
-            
+            Debug.Log("Fail Drop");
+            transform.position = new Vector3(0, 1, 0);
+
         }
         
         // public void Drop()
@@ -74,7 +91,7 @@ namespace Game.Scripts.Behaviours
         
         private void MoveObject()
         {
-            Vector3 newPosition = Vector3.Lerp(transform.position, _objectGrabPointTransform.position,_lerpSpeed * Time.deltaTime);
+            Vector3 newPosition = Vector3.Lerp(transform.position, objectGrabPointTransform.position,_lerpSpeed * Time.deltaTime);
             _objectRigidbody.MovePosition(newPosition);
         }
 

@@ -2,6 +2,7 @@
 //      github.com/dkbozkurt
 
 using System;
+using System.Collections.Generic;
 using Game.Scripts.Behaviours;
 using UnityEngine;
 
@@ -21,10 +22,11 @@ namespace Game.Scripts.Managers
         [SerializeField] private LayerMask itemSlotCollideLayerMask;
         private GrabbableObject _grabbableObject;
         private float _pickUpDistance = 100f;
-
+        
         private Camera _mainCamera;
-
+        
         private int _matchedSlots=0;
+        private List<ItemSlotBehaviour> itemSlots;
 
         private void Awake()
         {
@@ -42,6 +44,7 @@ namespace Game.Scripts.Managers
             if (Input.GetMouseButtonUp(0))
             {
                 if(!_grabbableObject) return;
+                _grabbableObject.objectGrabPointTransform = null;
                 DropObject();
             }
 
@@ -72,6 +75,7 @@ namespace Game.Scripts.Managers
             {
                 _grabbableObject.FailDrop();
             }
+            _grabbableObject.itemSlots.Clear();
             _grabbableObject = null;
         }
         private bool CheckSlotsMatching()
@@ -83,6 +87,7 @@ namespace Game.Scripts.Managers
                 if (Physics.Raycast(grabbableSlot.transform.position,-1*  grabbableSlot.transform.up, out RaycastHit raycastHit, 100f,
                         itemSlotCollideLayerMask))
                 {
+                    _grabbableObject.itemSlots.Add(raycastHit.collider.GetComponent<ItemSlotBehaviour>());
                     _matchedSlots++;
                 }
             }
