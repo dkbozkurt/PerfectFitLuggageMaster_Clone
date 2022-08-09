@@ -18,10 +18,13 @@ namespace Game.Scripts.Managers
         [Space]
         [Header("Grabbable Related")]
         [SerializeField] private LayerMask pickUpLayerMask;
+        [SerializeField] private LayerMask itemSlotCollideLayerMask;
         private GrabbableObject _grabbableObject;
         private float _pickUpDistance = 100f;
-        
+
         private Camera _mainCamera;
+
+        private int _matchedSlots=0;
 
         private void Awake()
         {
@@ -61,8 +64,36 @@ namespace Game.Scripts.Managers
 
         private void DropObject()
         {
-            _grabbableObject.Drop();
+            if (CheckSlotsMatching())
+            {
+                _grabbableObject.SuccessDrop();
+            }
+            else
+            {
+                _grabbableObject.FailDrop();
+            }
             _grabbableObject = null;
+        }
+        private bool CheckSlotsMatching()
+        {
+            _matchedSlots = 0;
+            
+            foreach (GrabbableSlotBehaviour grabbableSlot in _grabbableObject.grabbableSlotBehaviours)
+            {
+                if (Physics.Raycast(grabbableSlot.transform.position,-1*  grabbableSlot.transform.up, out RaycastHit raycastHit, 100f,
+                        itemSlotCollideLayerMask))
+                {
+                    _matchedSlots++;
+                }
+            }
+
+            if (_matchedSlots >= _grabbableObject.grabbableSlotBehaviours.Count)
+                return true;
+            else
+            {
+                return false;    
+            }
+            
         }
     }
 }
