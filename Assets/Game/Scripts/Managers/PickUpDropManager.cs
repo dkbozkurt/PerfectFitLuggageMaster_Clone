@@ -78,13 +78,17 @@ namespace Game.Scripts.Managers
             _grabbableObject.itemSlots.Clear();
             _grabbableObject = null;
         }
+        
         private bool CheckSlotsMatching()
         {
             _matchedSlots = 0;
             
             foreach (GrabbableSlotBehaviour grabbableSlot in _grabbableObject.grabbableSlotBehaviours)
             {
-                if (Physics.Raycast(grabbableSlot.transform.position,-1*  grabbableSlot.transform.up, out RaycastHit raycastHit, 100f,
+                if (Physics.Raycast(grabbableSlot.transform.position,
+                        -1 *  grabbableSlot.transform.up, 
+                        out RaycastHit raycastHit, 
+                        GameManager.Instance.slotSizeMultiplier,
                         itemSlotCollideLayerMask))
                 {
                     _grabbableObject.itemSlots.Add(raycastHit.collider.GetComponent<ItemSlotBehaviour>());

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Game.Scripts.Managers;
 using UnityEngine;
 
 namespace Game.Scripts.Behaviours
@@ -49,7 +50,7 @@ namespace Game.Scripts.Behaviours
         
         private void Update()
         {
-            // DrawRayFromSlots();
+            DrawRayFromSlots();
         }
         
         private void FixedUpdate()
@@ -80,6 +81,11 @@ namespace Game.Scripts.Behaviours
             Debug.Log("Fail Drop");
             transform.position = new Vector3(0, 1, 0);
 
+            if (makeKinematicWhenGrabbed) _objectRigidbody.isKinematic = false;
+            _objectRigidbody.velocity = Vector3.zero;
+            objectGrabPointTransform = null;
+            _objectRigidbody.useGravity = true;
+
         }
         
         // public void Drop()
@@ -99,7 +105,7 @@ namespace Game.Scripts.Behaviours
         {
             foreach (GrabbableSlotBehaviour grabbableSlot in grabbableSlotBehaviours)
             {
-                Vector3 direction = grabbableSlot.transform.TransformDirection(Vector3.down) * 2;
+                Vector3 direction = grabbableSlot.transform.TransformDirection(Vector3.down * GameManager.Instance.slotSizeMultiplier);
                 Debug.DrawRay(grabbableSlot.transform.position,direction,Color.green);
             }
         }
