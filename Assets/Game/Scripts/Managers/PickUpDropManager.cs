@@ -12,8 +12,7 @@ namespace Game.Scripts.Managers
     /// </summary>
     public class PickUpDropManager : SingletonBehaviour<PickUpDropManager>
     {
-        [Header("Player Related")]
-        [SerializeField] private Transform playerCameraTransform;
+        [Header("Player Related")] 
         [SerializeField] private Transform objectGrabPointTransform;
         
         [Space]
@@ -22,6 +21,13 @@ namespace Game.Scripts.Managers
         private GrabbableObject _grabbableObject;
         private float _pickUpDistance = 100f;
         
+        private Camera _mainCamera;
+
+        private void Awake()
+        {
+            _mainCamera = Camera.main;
+        }
+
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))
@@ -40,8 +46,11 @@ namespace Game.Scripts.Managers
 
         private void PickUpObject()
         {
-            if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward,
-                    out RaycastHit raycastHit, _pickUpDistance, pickUpLayerMask))
+            // With Camera transform forward direction
+            // if (Physics.Raycast(_mainCamera.transform,_mainCamera.forward , out RaycastHit raycastHit,float.MaxValue, pickUpLayerMask))
+            
+            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit raycastHit,float.MaxValue, pickUpLayerMask))
             {
                 if (raycastHit.transform.TryGetComponent(out _grabbableObject))
                 {
