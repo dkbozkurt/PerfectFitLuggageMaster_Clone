@@ -2,6 +2,7 @@
 //      github.com/dkbozkurt
 
 using System;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Game.Scripts.Behaviours
@@ -21,12 +22,21 @@ namespace Game.Scripts.Behaviours
         private Rigidbody _objectRigidbody;
         private Transform _objectGrabPointTransform;
         private float _lerpSpeed = 10f;
+        private int angleToRotate = 0;
 
         private Vector3 _additionalOffSetValue = Vector3.zero;
 
         private void Awake()
         {
             _objectRigidbody = GetComponent<Rigidbody>();
+        }
+
+        private void OnMouseOver()
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                RotateObject();
+            }
         }
         
         private void FixedUpdate()
@@ -55,6 +65,17 @@ namespace Game.Scripts.Behaviours
         public void AddExtraOffSetValue(float value)
         {
             _additionalOffSetValue += new Vector3(0, value, 0);
+        }
+        
+        private void RotateObject()
+        {
+            angleToRotate += 90;
+            transform.DORotate(new Vector3(0,angleToRotate, 0), 0.2f).SetEase(Ease.Linear);
+            
+            // Vector3 newRotation = Vector3.Lerp(transform.rotation.eulerAngles, 
+            //     transform.rotation.eulerAngles + new Vector3(0,10,0)
+            //     ,0.1f * Time.deltaTime);
+            // transform.Rotate(newRotation);
         }
     }
 }
