@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using Game.Scripts.Managers;
 using UnityEngine;
 
@@ -27,17 +28,20 @@ namespace Game.Scripts.Behaviours
         public List<GrabbableSlotBehaviour> grabbableSlotBehaviours;
         
         private Rigidbody _objectRigidbody;
-        [HideInInspector] public Transform objectGrabPointTransform;
+        public Transform objectGrabPointTransform;
         private float _lerpSpeed = 10f;
 
         public List<ItemSlotBehaviour> itemSlots;
         private Vector3 _pivotPointFirstPosition;
 
+        private int _angleToRotate = 0;
+        private bool _isDragging = false;
+        private Vector3 _initialMousePosition;
         private void Awake()
         {
             _objectRigidbody = GetComponent<Rigidbody>();
             _pivotPointFirstPosition = grabbableSlotBehaviours[0].transform.localPosition;
-            
+
             if(objectHeight <= 0 ) Debug.LogError("Object height must be greater than 0.");
         }
 
@@ -52,13 +56,33 @@ namespace Game.Scripts.Behaviours
         {
             DrawRayFromSlots();
         }
-        
+
+        private void OnMouseDown()
+        {
+            _initialMousePosition = Input.mousePosition;
+        }
+
         private void FixedUpdate()
         {
             if(objectGrabPointTransform == null) return;
+
+            if (!_isDragging && _initialMousePosition == Input.mousePosition) return;
+
+            _isDragging = true;
             MoveObject();
         }
-        
+
+        private void OnMouseUp()
+        {
+            if (_isDragging)
+            {
+                _isDragging = false;
+                return;
+            }
+            
+            RotateObject();
+        }
+
         public void SuccessDrop()
         {
             Debug.Log("Success Drop");
@@ -99,6 +123,12 @@ namespace Game.Scripts.Behaviours
         {
             Vector3 newPosition = Vector3.Lerp(transform.position, objectGrabPointTransform.position,_lerpSpeed * Time.deltaTime);
             _objectRigidbody.MovePosition(newPosition);
+        }
+
+        private void RotateObject()
+        {
+            _angleToRotate += 90;
+            transform.DORotate(new Vector3(0, _angleToRotate, 0), 0.2f).SetEase(Ease.Linear);
         }
 
         private void DrawRayFromSlots()
