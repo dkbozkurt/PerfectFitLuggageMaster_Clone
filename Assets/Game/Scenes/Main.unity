@@ -248,8 +248,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  radius: 5
-  power: 250
+  radius: 10
+  power: 500
   explosionDelay: 0
 --- !u!4 &131787696
 Transform:
