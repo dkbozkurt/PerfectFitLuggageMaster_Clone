@@ -53,7 +53,7 @@ namespace Game.Scripts.Managers
         private void PickUpObject()
         {
             // With Camera transform forward direction
-            // if (Physics.Raycast(_mainCamera.transform,_mainCamera.forward , out RaycastHit raycastHit,float.MaxValue, pickUpLayerMask))
+            // if (Physics.Raycast(_mainCamera.transform.position ,_mainCamera.forward , out RaycastHit raycastHit,float.MaxValue, pickUpLayerMask))
             
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit raycastHit,float.MaxValue, pickUpLayerMask))
@@ -70,7 +70,7 @@ namespace Game.Scripts.Managers
             ItemSlotsSetter(_grabbableObject.itemSlots,false);
             _grabbableObject.itemSlots.Clear();
             
-            _grabbableObject.HighlightSetter(false);
+            ItemHighlightBehaviour.Instance.HighlightSetter(false);
             
             if (CheckSlotsMatching())
             {
@@ -96,10 +96,10 @@ namespace Game.Scripts.Managers
                 if (Physics.Raycast(grabbableSlot.transform.position,
                         -1 *  grabbableSlot.transform.up,
                         out RaycastHit raycastHit, 
-                        GameManager.Instance.slotSizeMultiplier,
+                        GameManager.Instance.slotSizeMultiplier * GameManager.Instance.dragObjectOffsetValue.y,
                         itemSlotCollideLayerMask))
                 {
-                    // TODO aga buraya bakmayi unutma alt satir !
+                    
                     if (raycastHit.collider.GetComponent<ItemSlotBehaviour>().IsOccupied) break;
                     _grabbableObject.itemSlots.Add(raycastHit.collider.GetComponent<ItemSlotBehaviour>());
                     _matchedSlots++;

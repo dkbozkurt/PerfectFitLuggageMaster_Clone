@@ -135,7 +135,7 @@ namespace Game.Scripts.Behaviours
         
         private void MoveObject()
         {
-            HighlightSetter(true);
+            ItemHighlightBehaviour.Instance.HighlightSetter(true,gameObject);
             
             Vector3 newPosition = Vector3.Lerp(transform.position, objectGrabPointTransform.position,_lerpSpeed * Time.deltaTime);
             _objectRigidbody.MovePosition(newPosition);
@@ -151,16 +151,10 @@ namespace Game.Scripts.Behaviours
         {
             foreach (GrabbableSlotBehaviour grabbableSlot in grabbableSlotBehaviours)
             {
-                Vector3 direction = grabbableSlot.transform.TransformDirection(Vector3.down * GameManager.Instance.slotSizeMultiplier);
+                Vector3 direction = grabbableSlot.transform.TransformDirection(Vector3.down * (GameManager.Instance.slotSizeMultiplier * GameManager.Instance.dragObjectOffsetValue.y));
                 Debug.DrawRay(grabbableSlot.transform.position,direction,Color.green);
             }
         }
-
-        public void HighlightSetter(bool status)
-        {
-            // highlightTexture ayarla
-            
-            
-        }
+        
     }
 }
