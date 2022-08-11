@@ -17,11 +17,14 @@ namespace Game.Scripts.Behaviours
 
         public void HighlightSetter(bool status, GameObject grabbedObject=null)
         {
+            if (status)
+            {
+                _highlightedObject = grabbedObject;
+                SetHighlightProperties();    
+            }
+            
             highlight.SetActive(status);
-            if(!status) return;
-
-            _highlightedObject = grabbedObject;
-            SetHighlightProperties();
+            
         }
         
         private void SetHighlightProperties()
