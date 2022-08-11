@@ -13,6 +13,7 @@ namespace Game.Scripts.Managers
     /// </summary>
     public class PickUpDropManager : SingletonBehaviour<PickUpDropManager>
     {
+        public static Action OnObjectDrop;
         [Header("Player Related")] 
         [SerializeField] private Transform objectGrabPointTransform;
         
@@ -20,7 +21,7 @@ namespace Game.Scripts.Managers
         [Header("Grabbable Related")]
         [SerializeField] private LayerMask pickUpLayerMask;
         [SerializeField] private LayerMask itemSlotCollideLayerMask;
-        private GrabbableObject _grabbableObject;
+        [HideInInspector] public GrabbableObject grabbableObject;
         private float _pickUpDistance = 100f;
         
         private Camera _mainCamera;
@@ -37,14 +38,14 @@ namespace Game.Scripts.Managers
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if(_grabbableObject) return;
+                if(grabbableObject) return;
                 PickUpObject();
             }
 
             if (Input.GetMouseButtonUp(0))
             {
-                if(!_grabbableObject) return;
-                _grabbableObject.objectGrabPointTransform = null;
+                if(!grabbableObject) return;
+                grabbableObject.objectGrabPointTransform = null;
                 DropObject();
             }
 
@@ -58,55 +59,56 @@ namespace Game.Scripts.Managers
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit raycastHit,float.MaxValue, pickUpLayerMask))
             {
-                if (raycastHit.transform.TryGetComponent(out _grabbableObject))
+                if (raycastHit.transform.TryGetComponent(out grabbableObject))
                 {
-                    _grabbableObject.Grab(objectGrabPointTransform);
+                    grabbableObject.Grab(objectGrabPointTransform);
                 }
             }
         }
 
         private void DropObject()
         {
-            ItemSlotsSetter(_grabbableObject.itemSlots,false);
-            _grabbableObject.itemSlots.Clear();
+            ItemSlotsSetter(grabbableObject.itemSlots,false);
+            grabbableObject.itemSlots.Clear();
             
             ItemHighlightBehaviour.Instance.HighlightSetter(false);
+            OnObjectDrop?.Invoke();
             
             if (CheckSlotsMatching())
             {
-                _grabbableObject.SuccessDrop();
-                //ShiftItemSlots(_grabbableObject.itemSlots);
-                ItemSlotsSetter(_grabbableObject.itemSlots,true);
+                grabbableObject.SuccessDrop();
+                //ShiftItemSlots(grabbableObject.itemSlots);
+                ItemSlotsSetter(grabbableObject.itemSlots,true);
             }
             else
             {
-                _grabbableObject.FailDrop();
-                ItemSlotsSetter(_grabbableObject.itemSlots,false);
+                grabbableObject.FailDrop();
+                ItemSlotsSetter(grabbableObject.itemSlots,false);
             }
             
-            _grabbableObject = null;
+            grabbableObject = null;
         }
         
         private bool CheckSlotsMatching()
         {
             _matchedSlots = 0;
             
-            foreach (GrabbableSlotBehaviour grabbableSlot in _grabbableObject.grabbableSlotBehaviours)
+            foreach (GrabbableSlotBehaviour grabbableSlot in grabbableObject.grabbableSlotBehaviours)
             {
                 if (Physics.Raycast(grabbableSlot.transform.position,
-                        -1 *  grabbableSlot.transform.up,
+                        Vector3.down,
                         out RaycastHit raycastHit, 
                         GameManager.Instance.slotSizeMultiplier * GameManager.Instance.dragObjectOffsetValue.y,
                         itemSlotCollideLayerMask))
                 {
                     
                     if (raycastHit.collider.GetComponent<ItemSlotBehaviour>().IsOccupied) break;
-                    _grabbableObject.itemSlots.Add(raycastHit.collider.GetComponent<ItemSlotBehaviour>());
+                    grabbableObject.itemSlots.Add(raycastHit.collider.GetComponent<ItemSlotBehaviour>());
                     _matchedSlots++;
                 }
             }
 
-            if (_matchedSlots >= _grabbableObject.grabbableSlotBehaviours.Count)
+            if (_matchedSlots >= grabbableObject.grabbableSlotBehaviours.Count)
                 return true;
             else
             {

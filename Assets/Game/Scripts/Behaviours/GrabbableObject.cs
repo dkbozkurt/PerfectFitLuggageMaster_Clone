@@ -26,10 +26,7 @@ namespace Game.Scripts.Behaviours
         [Header("Grabbable Properties")] 
         public int objectHeight;
         public List<GrabbableSlotBehaviour> grabbableSlotBehaviours;
-        
-        [Header("Highlight Properties")] 
-        [SerializeField] private Texture highlightTexture; 
-        
+
         private Rigidbody _objectRigidbody;
         [HideInInspector] public Transform objectGrabPointTransform;
         private float _lerpSpeed = 10f;

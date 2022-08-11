@@ -1,5 +1,6 @@
 ﻿using System;
 using DG.Tweening;
+using Game.Scripts.Managers;
 using UnityEngine;
 
 namespace Game.Scripts.Behaviours
@@ -7,25 +8,45 @@ namespace Game.Scripts.Behaviours
     public class MaterialFadeBehaviour : MonoBehaviour
     {
         private Material _objectMaterial;
-        public bool isPlaced = false;
+        [HideInInspector] public bool isPlaced = false;
         
         private void Awake()
         {
             _objectMaterial = GetComponent<MeshRenderer>().material;
         }
 
+        private void OnEnable()
+        {
+            PickUpDropManager.OnObjectDrop += InternalMaterialSetterToDefault;
+        }
+
+        private void OnDisable()
+        {
+            PickUpDropManager.OnObjectDrop -= InternalMaterialSetterToDefault;
+        }
+
         private void OnMouseEnter()
         {
-            if(!isPlaced) return;
-            Debug.Log("Material to Transparant");
-            _objectMaterial.DOFade(0.3f, 0.2f);
+            if(!isPlaced || PickUpDropManager.Instance.grabbableObject == null) return;
+            
+            ChangeMaterialAlpha(0.2f);
         }
 
         private void OnMouseExit()
         {
-            if(!isPlaced) return;
-            Debug.Log("Material to normal");
-            _objectMaterial.DOFade(1, 0.2f);
+            if(!isPlaced || PickUpDropManager.Instance.grabbableObject == null) return;
+            
+            ChangeMaterialAlpha(1);
+        }
+
+        private void InternalMaterialSetterToDefault()
+        {
+            ChangeMaterialAlpha(1);
+        }
+        
+        private void ChangeMaterialAlpha(float value)
+        {
+            _objectMaterial.DOFade(value, 0.2f);
         }
     }
 }
