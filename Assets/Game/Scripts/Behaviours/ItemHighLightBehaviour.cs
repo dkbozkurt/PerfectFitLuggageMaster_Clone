@@ -41,12 +41,12 @@ namespace Game.Scripts.Behaviours
         
         private void UpdateHighlightLocation()
         {
-            if (Physics.Raycast(_highlightedObject.transform.position, 
-                    _highlightedObject.transform.TransformDirection(Vector3.down),
-                    out RaycastHit raycastHit,float.MaxValue, 
-                    interactableLayers))
+            if (Physics.Raycast(_highlightedObject.transform.position
+                    ,Vector3.down //_highlightedObject.transform.TransformDirection(Vector3.down)
+                    , out RaycastHit raycastHit,float.MaxValue
+                    , interactableLayers))
             {
-                // Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * raycastHit.distance, Color.yellow);
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * raycastHit.distance, Color.yellow);
                 transform.position = new Vector3(_highlightedObject.transform.position.x,
                     raycastHit.point.y, _highlightedObject.transform.position.z);
                 transform.rotation = Quaternion.Euler(
