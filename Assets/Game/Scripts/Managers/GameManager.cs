@@ -43,7 +43,9 @@ public class GameManager : SingletonBehaviour<GameManager>
                 break;
         }
 
+        cameraController.CarFollowerCamPropertySetter();
         cameraController.EnableGameCameraSetter(true);
+        
         DOVirtual.DelayedCall(0.5f, () =>
         {
             cargoTruck.GetComponent<CargoTruckBehaviour>().SetDestinationAndRun(new Vector3(50, 0, -6));
