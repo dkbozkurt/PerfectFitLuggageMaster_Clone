@@ -21,10 +21,6 @@ namespace Game.Scripts.Controllers
         {
             gameCamera.enabled = status;
         }
-
-        public void CarFollowerCamPropertySetter()
-        {
-            carFollowerCamera.LookAt = null;
-        }
+        
     }
 }

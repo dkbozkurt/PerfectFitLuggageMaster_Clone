@@ -42,8 +42,7 @@ public class GameManager : SingletonBehaviour<GameManager>
                 Debug.LogError("Select Luggage Set Type !!!");
                 break;
         }
-
-        cameraController.CarFollowerCamPropertySetter();
+        
         cameraController.EnableGameCameraSetter(true);
         
         DOVirtual.DelayedCall(0.5f, () =>
