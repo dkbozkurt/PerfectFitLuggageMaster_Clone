@@ -63,10 +63,11 @@ namespace Game.Scripts.Managers
         private void PickUpObject()
         {
             // With Camera transform forward direction
-            // if (Physics.Raycast(_mainCamera.transform,_mainCamera.forward , out RaycastHit raycastHit,float.MaxValue, pickUpLayerMask))
+            // if (Physics.Raycast(_mainCamera.transform.position,_mainCamera.forward , out RaycastHit raycastHit,float.MaxValue, pickUpLayerMask))
             
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit raycastHit,float.MaxValue, pickUpLayerMask))
+            if (Physics.Raycast(ray, out RaycastHit raycastHit,
+                    float.MaxValue, pickUpLayerMask))
             {
                 if (raycastHit.transform.TryGetComponent(out _grabbableObject))
                 {

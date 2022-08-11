@@ -19,6 +19,7 @@ namespace Game.Scripts.Behaviours
     public class GrabbableObject : MonoBehaviour
     {
         [SerializeField] private bool makeKinematicWhenGrabbed = false;
+        
         private Rigidbody _objectRigidbody;
         private Transform _objectGrabPointTransform;
         private float _lerpSpeed = 10f;
@@ -51,6 +52,9 @@ namespace Game.Scripts.Behaviours
         public void Grab(Transform grabPointTransform)
         {
             if (makeKinematicWhenGrabbed) _objectRigidbody.isKinematic = true;
+            
+            ItemHighLightBehaviour.Instance.HighlightSetter(true,gameObject);
+            
             _objectGrabPointTransform = grabPointTransform;
             _objectRigidbody.useGravity = false;
         }
@@ -58,6 +62,9 @@ namespace Game.Scripts.Behaviours
         public void Drop()
         {
             if (makeKinematicWhenGrabbed) _objectRigidbody.isKinematic = false;
+            
+            ItemHighLightBehaviour.Instance.HighlightSetter(false);
+            
             _objectGrabPointTransform = null;
             _objectRigidbody.useGravity = true;
         }
