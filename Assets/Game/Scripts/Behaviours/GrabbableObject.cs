@@ -27,20 +27,29 @@ namespace Game.Scripts.Behaviours
         public int objectHeight;
         public List<GrabbableSlotBehaviour> grabbableSlotBehaviours;
         
+        [Header("Highlight Properties")] 
+        [SerializeField] private Texture highlightTexture; 
+        
         private Rigidbody _objectRigidbody;
-        public Transform objectGrabPointTransform;
+        [HideInInspector] public Transform objectGrabPointTransform;
         private float _lerpSpeed = 10f;
 
-        public List<ItemSlotBehaviour> itemSlots;
+        [HideInInspector] public List<ItemSlotBehaviour> itemSlots;
         private Vector3 _pivotPointFirstPosition;
 
         private int _angleToRotate = 0;
         private bool _isDragging = false;
         private Vector3 _initialMousePosition;
+
+        private MaterialFadeBehaviour _materialFadeBehaviour;
+        
         private void Awake()
         {
             _objectRigidbody = GetComponent<Rigidbody>();
+            _materialFadeBehaviour = GetComponent<MaterialFadeBehaviour>();
+
             _pivotPointFirstPosition = grabbableSlotBehaviours[0].transform.localPosition;
+            
 
             if(objectHeight <= 0 ) Debug.LogError("Object height must be greater than 0.");
         }
@@ -61,7 +70,7 @@ namespace Game.Scripts.Behaviours
         {
             _initialMousePosition = Input.mousePosition;
         }
-
+        
         private void FixedUpdate()
         {
             if(objectGrabPointTransform == null) return;
@@ -86,12 +95,14 @@ namespace Game.Scripts.Behaviours
         public void SuccessDrop()
         {
             Debug.Log("Success Drop");
-
+            
             if (grabbableSlotBehaviours.Count != itemSlots.Count)
             {
                 FailDrop();
                 return;
             }
+            
+            _materialFadeBehaviour.isPlaced = true;
             
             Vector3 pivotInterval = transform.localPosition - grabbableSlotBehaviours[0].transform.position;
             grabbableSlotBehaviours[0].transform.position = itemSlots[0].transform.position;
@@ -103,6 +114,9 @@ namespace Game.Scripts.Behaviours
         public void FailDrop()
         {
             Debug.Log("Fail Drop");
+
+            _materialFadeBehaviour.isPlaced = false;
+            
             transform.position = new Vector3(0, 1, 0);
 
             if (makeKinematicWhenGrabbed) _objectRigidbody.isKinematic = false;
@@ -121,6 +135,8 @@ namespace Game.Scripts.Behaviours
         
         private void MoveObject()
         {
+            HighlightSetter(true);
+            
             Vector3 newPosition = Vector3.Lerp(transform.position, objectGrabPointTransform.position,_lerpSpeed * Time.deltaTime);
             _objectRigidbody.MovePosition(newPosition);
         }
@@ -138,6 +154,13 @@ namespace Game.Scripts.Behaviours
                 Vector3 direction = grabbableSlot.transform.TransformDirection(Vector3.down * GameManager.Instance.slotSizeMultiplier);
                 Debug.DrawRay(grabbableSlot.transform.position,direction,Color.green);
             }
+        }
+
+        public void HighlightSetter(bool status)
+        {
+            // highlightTexture ayarla
+            
+            
         }
     }
 }

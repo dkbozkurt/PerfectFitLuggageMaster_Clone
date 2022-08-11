@@ -70,6 +70,8 @@ namespace Game.Scripts.Managers
             ItemSlotsSetter(_grabbableObject.itemSlots,false);
             _grabbableObject.itemSlots.Clear();
             
+            _grabbableObject.HighlightSetter(false);
+            
             if (CheckSlotsMatching())
             {
                 _grabbableObject.SuccessDrop();

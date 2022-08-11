@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4534409115765374563}
   - component: {fileID: 4534409115765374559}
   - component: {fileID: 4534409115765374556}
+  - component: {fileID: 4418253696628336254}
   m_Layer: 9
   m_Name: ItemWithSlots1x1x1
   m_TagString: Untagged
@@ -114,6 +115,7 @@ MonoBehaviour:
   objectHeight: 2
   grabbableSlotBehaviours:
   - {fileID: 4784821903783215053}
+  highlightTexture: {fileID: 0}
   objectGrabPointTransform: {fileID: 0}
   itemSlots: []
 --- !u!54 &4534409115765374556
@@ -132,6 +134,18 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &4418253696628336254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4534409115765374562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b2ed41788d9ea740949bfff85f86321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6864127478965344023
 PrefabInstance:
   m_ObjectHideFlags: 0
