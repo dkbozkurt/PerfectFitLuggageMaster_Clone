@@ -55,6 +55,10 @@ namespace Game.Scripts.Behaviours
                     transform.rotation.z);
                 
             }
+            else
+            {
+                transform.position = Vector3.one*-1000;
+            }
         }
     }
 }
