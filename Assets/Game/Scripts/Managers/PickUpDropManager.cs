@@ -67,15 +67,21 @@ namespace Game.Scripts.Managers
 
         private void DropObject()
         {
+            ItemSlotsSetter(_grabbableObject.itemSlots,false);
+            _grabbableObject.itemSlots.Clear();
+            
             if (CheckSlotsMatching())
             {
                 _grabbableObject.SuccessDrop();
+                //ShiftItemSlots(_grabbableObject.itemSlots);
+                ItemSlotsSetter(_grabbableObject.itemSlots,true);
             }
             else
             {
                 _grabbableObject.FailDrop();
+                ItemSlotsSetter(_grabbableObject.itemSlots,false);
             }
-            _grabbableObject.itemSlots.Clear();
+            
             _grabbableObject = null;
         }
         
@@ -86,11 +92,13 @@ namespace Game.Scripts.Managers
             foreach (GrabbableSlotBehaviour grabbableSlot in _grabbableObject.grabbableSlotBehaviours)
             {
                 if (Physics.Raycast(grabbableSlot.transform.position,
-                        -1 *  grabbableSlot.transform.up, 
+                        -1 *  grabbableSlot.transform.up,
                         out RaycastHit raycastHit, 
                         GameManager.Instance.slotSizeMultiplier,
                         itemSlotCollideLayerMask))
                 {
+                    // TODO aga buraya bakmayi unutma alt satir !
+                    if (raycastHit.collider.GetComponent<ItemSlotBehaviour>().IsOccupied) break;
                     _grabbableObject.itemSlots.Add(raycastHit.collider.GetComponent<ItemSlotBehaviour>());
                     _matchedSlots++;
                 }
@@ -104,5 +112,23 @@ namespace Game.Scripts.Managers
             }
             
         }
+
+        private void ItemSlotsSetter(List<ItemSlotBehaviour> itemSlots,bool status)
+        {
+            foreach (var slot in itemSlots)
+            {
+                slot.IsOccupied = status;
+            }
+            
+        }
+        
+        // private void ShiftItemSlots(List<ItemSlotBehaviour> itemSlots)
+        // {
+        //     foreach (var slot in itemSlots)
+        //     {
+        //         slot.transform.position = new Vector3(slot.transform.position.x,slot.transform.position.y +
+        //             _grabbableObject.objectHeight * GameManager.Instance.slotSizeMultiplier, slot.transform.position.z);
+        //     }
+        // }
     }
 }
