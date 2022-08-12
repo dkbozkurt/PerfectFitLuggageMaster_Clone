@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2506445741806594315}
   - component: {fileID: 2506445741806594359}
   - component: {fileID: 2506445741806594356}
+  - component: {fileID: 4547561374860531387}
   m_Layer: 9
   m_Name: Luggage1
   m_TagString: Untagged
@@ -127,6 +128,29 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4547561374860531387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2506445741806594314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e659845bc9daf554eab24614a8622ddf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  assignableMats:
+  - {fileID: 2100000, guid: cc0842825c46575428056269b7bfdce8, type: 2}
+  - {fileID: 2100000, guid: 2f4aab576beb4b543906e899f6200349, type: 2}
+  - {fileID: 2100000, guid: 96754b801210829469505db3f48086d2, type: 2}
+  - {fileID: 2100000, guid: 94a776022031a0648a4b267928186d88, type: 2}
+  - {fileID: 2100000, guid: 912f9261558861a42872538d5cedcb41, type: 2}
+  - {fileID: 2100000, guid: ffa4387903a06a64ba2e27aa589a07ea, type: 2}
+  - {fileID: 2100000, guid: 7e29a83a7864dec4e9f422fb161fe3ee, type: 2}
+  - {fileID: 2100000, guid: 80eb95d766b1d044c81a6f1a0ca42170, type: 2}
+  - {fileID: 2100000, guid: 9c4461b6008ac884db441aa05f00182f, type: 2}
+  materialIndexToChange: 1
 --- !u!1001 &5017440217304499542
 PrefabInstance:
   m_ObjectHideFlags: 0
