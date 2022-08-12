@@ -25,19 +25,27 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     [SerializeField] private List<GameObject> startPlatformObjects;
 
+    private bool _isFirstCall=true;
+    
     private void OnEnable()
     {
         _firstSpawnedLuggagesOnTruck = SpawnLuggageSetOnTruck(cargoTruck.GetComponent<CargoTruckBehaviour>().luggageCarryPoint);
         SpawnLuggageSetOnTruck(cargoTruck.GetComponent<CargoTruckBehaviour>().luggageCarryPoint2);
+        DOVirtual.DelayedCall(0.5f,
+            () => cargoTruck.GetComponent<CargoTruckBehaviour>()
+                .SetDestinationAndRun(cargoTruck.GetComponent<CargoTruckBehaviour>().destinationPosition));
     }
-
-    public void DisableTruckLuggage()
+    
+    public void TruckLuggageSetter(bool status)
     {
-        _firstSpawnedLuggagesOnTruck.SetActive(false);
+        _firstSpawnedLuggagesOnTruck.SetActive(status);
     }
 
     public void SelectLuggageSet()
     {
+        if(!_isFirstCall) return;
+        _isFirstCall = false;
+        
         EnableStartPlatform(true);
         
         luggageSets[(int)luggageSet].SetActive(true);
