@@ -11,7 +11,9 @@ namespace Game.Scripts.Controllers
         [Header("Cameras")] 
         [SerializeField] private CinemachineVirtualCamera gameCamera;
         [SerializeField] private CinemachineVirtualCamera carFollowerCamera;
+        [SerializeField] private CinemachineVirtualCamera creativeCamera;
 
+        private bool _creativeCamStatus = false;
         private void Start()
         {
             carFollowerCamera.enabled = true;
@@ -21,6 +23,20 @@ namespace Game.Scripts.Controllers
             {
                 EnableGameCameraSetter(true);
             });
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                _creativeCamStatus = !_creativeCamStatus;
+                AdditionalCamSetter(_creativeCamStatus);
+            }
+        }
+
+        private void AdditionalCamSetter(bool status)
+        {
+            creativeCamera.enabled = status;
         }
 
         public void EnableGameCameraSetter(bool status)
