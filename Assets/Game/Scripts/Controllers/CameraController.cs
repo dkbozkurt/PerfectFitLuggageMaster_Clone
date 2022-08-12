@@ -1,5 +1,6 @@
 ﻿using System;
 using Cinemachine;
+using DG.Tweening;
 using Game.Scripts.Behaviours;
 using UnityEngine;
 
@@ -15,6 +16,11 @@ namespace Game.Scripts.Controllers
         {
             carFollowerCamera.enabled = true;
             EnableGameCameraSetter(false);
+
+            DOVirtual.DelayedCall(1.5f, () =>
+            {
+                EnableGameCameraSetter(true);
+            });
         }
 
         public void EnableGameCameraSetter(bool status)

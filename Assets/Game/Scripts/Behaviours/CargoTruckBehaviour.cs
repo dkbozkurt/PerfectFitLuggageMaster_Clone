@@ -8,6 +8,7 @@ public class CargoTruckBehaviour : MonoBehaviour
 {
     [SerializeField] private Vector3 destinationPosition;
     [SerializeField] private float destinationDuration = 2f;
+    public Transform luggageCarryPoint;
     
     private void OnEnable()
     {
@@ -19,7 +20,7 @@ public class CargoTruckBehaviour : MonoBehaviour
 
     public void SetDestinationAndRun(Vector3 destination)
     {
-        transform.DOMove(destination, destinationDuration).SetEase(Ease.Linear).OnComplete(() =>
+        transform.DOMove(destination, destinationDuration).SetEase(Ease.InOutSine).OnComplete(() =>
         {
             GameManager.Instance.SelectLuggageSet();
             

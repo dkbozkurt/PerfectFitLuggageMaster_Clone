@@ -20,35 +20,33 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     [Header("Game Flow")] [SerializeField] private GameObject cargoTruck;
 
-    [SerializeField] private CameraController cameraController;
+    private void OnEnable()
+    {
+        // SpawnLuggageSetOnTruck();
+    }
 
     public void SelectLuggageSet()
     {
-        switch (luggageSet)
-        {
-            case LuggageSet.LuggageSet1:
-                luggageSets[0].SetActive(true);
-                break;
-
-            case LuggageSet.LuggageSet2:
-                luggageSets[1].SetActive(true);
-                break;
-
-            case LuggageSet.LuggageSet3:
-                luggageSets[2].SetActive(true);
-                break;
-
-            default:
-                Debug.LogError("Select Luggage Set Type !!!");
-                break;
-        }
-        
-        cameraController.EnableGameCameraSetter(true);
+        luggageSets[(int)luggageSet].SetActive(true);
         
         DOVirtual.DelayedCall(0.5f, () =>
         {
             cargoTruck.GetComponent<CargoTruckBehaviour>().SetDestinationAndRun(new Vector3(-100, 0, -6));
         });
         
+    }
+
+    private void SpawnLuggageSetOnTruck()
+    {
+        var selectedLuggage = luggageSets[(int) luggageSet];
+        selectedLuggage.SetActive(true);
+        var luggages = Instantiate(luggageSets[(int) luggageSet],cargoTruck.GetComponent<CargoTruckBehaviour>().luggageCarryPoint);
+        
+        var grabbableObjectsRB = luggages.GetComponentsInChildren<Rigidbody>();
+        foreach (var child in grabbableObjectsRB)
+        {
+            child.isKinematic = true;
+        }
+
     }
 }
