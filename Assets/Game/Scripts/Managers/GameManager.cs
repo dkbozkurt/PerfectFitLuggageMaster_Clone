@@ -23,6 +23,8 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private GameObject _firstSpawnedLuggagesOnTruck;
 
+    [SerializeField] private List<GameObject> startPlatformObjects;
+
     private void OnEnable()
     {
         _firstSpawnedLuggagesOnTruck = SpawnLuggageSetOnTruck(cargoTruck.GetComponent<CargoTruckBehaviour>().luggageCarryPoint);
@@ -36,16 +38,16 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     public void SelectLuggageSet()
     {
+        EnableStartPlatform(true);
+        
         luggageSets[(int)luggageSet].SetActive(true);
         
         DOVirtual.DelayedCall(0.5f, () =>
         {
-            cargoTruck.GetComponent<CargoTruckBehaviour>().SetDestinationAndRun(new Vector3(-100, 0, -6));
+            cargoTruck.GetComponent<CargoTruckBehaviour>().SetDestinationAndRun(new Vector3(-100, 0, -7));
         });
         
     }
-    
-    
 
     private GameObject SpawnLuggageSetOnTruck(Transform spawnPoint)
     {
@@ -61,5 +63,13 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
 
         return luggages;
+    }
+
+    private void EnableStartPlatform( bool status)
+    {
+        foreach (GameObject child in startPlatformObjects)
+        {
+            child.SetActive(status);
+        }
     }
 }
