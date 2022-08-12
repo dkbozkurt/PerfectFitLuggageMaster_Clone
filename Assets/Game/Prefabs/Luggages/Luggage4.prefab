@@ -214,6 +214,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 9c0be8b94bc6a03408622e0686a4902a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5fc3004fafeef1140a74a25739dc04bd, type: 2}
     - target: {fileID: 919132149155446097, guid: 9c0be8b94bc6a03408622e0686a4902a, type: 3}
       propertyPath: m_Name
       value: luggage4
