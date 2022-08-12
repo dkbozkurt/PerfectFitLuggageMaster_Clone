@@ -47,7 +47,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         
         DOVirtual.DelayedCall(0.5f, () =>
         {
-            cargoTruck.GetComponent<CargoTruckBehaviour>().SetDestinationAndRun(new Vector3(50, 0, -6));
+            cargoTruck.GetComponent<CargoTruckBehaviour>().SetDestinationAndRun(new Vector3(-100, 0, -6));
         });
         
     }
