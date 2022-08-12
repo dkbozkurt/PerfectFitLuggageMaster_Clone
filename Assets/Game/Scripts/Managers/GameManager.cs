@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Game.Scripts.Behaviours;
 using Game.Scripts.Controllers;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public enum LuggageSet
@@ -20,9 +21,17 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     [Header("Game Flow")] [SerializeField] private GameObject cargoTruck;
 
+    private GameObject _firstSpawnedLuggagesOnTruck;
+
     private void OnEnable()
     {
-        // SpawnLuggageSetOnTruck();
+        _firstSpawnedLuggagesOnTruck = SpawnLuggageSetOnTruck(cargoTruck.GetComponent<CargoTruckBehaviour>().luggageCarryPoint);
+        SpawnLuggageSetOnTruck(cargoTruck.GetComponent<CargoTruckBehaviour>().luggageCarryPoint2);
+    }
+
+    public void DisableTruckLuggage()
+    {
+        _firstSpawnedLuggagesOnTruck.SetActive(false);
     }
 
     public void SelectLuggageSet()
@@ -35,18 +44,22 @@ public class GameManager : SingletonBehaviour<GameManager>
         });
         
     }
+    
+    
 
-    private void SpawnLuggageSetOnTruck()
+    private GameObject SpawnLuggageSetOnTruck(Transform spawnPoint)
     {
         var selectedLuggage = luggageSets[(int) luggageSet];
-        selectedLuggage.SetActive(true);
-        var luggages = Instantiate(luggageSets[(int) luggageSet],cargoTruck.GetComponent<CargoTruckBehaviour>().luggageCarryPoint);
+        var luggages = Instantiate(selectedLuggage, spawnPoint);
+        luggages.SetActive(true);
         
-        var grabbableObjectsRB = luggages.GetComponentsInChildren<Rigidbody>();
-        foreach (var child in grabbableObjectsRB)
+        foreach (Transform child in luggages.transform)
         {
-            child.isKinematic = true;
+            Destroy(child.GetComponent<GrabbableObject>());
+            Destroy(child.GetComponent<Rigidbody>());
+            Destroy(child.GetComponent<Collider>());
         }
 
+        return luggages;
     }
 }

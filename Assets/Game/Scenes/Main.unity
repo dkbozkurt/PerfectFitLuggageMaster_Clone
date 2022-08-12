@@ -317,6 +317,36 @@ Transform:
   m_Father: {fileID: 1442112271}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &102566979
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 102566980}
+  m_Layer: 0
+  m_Name: LuggageCarryPoint (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &102566980
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102566979}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 19.58, y: 0.03, z: 0.82}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1169917682}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &131787694
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,11 +411,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05c84763696610e4d8002ab1559821a0, type: 3}
       propertyPath: m_LocalScale.y
-      value: -877.209
+      value: -931.06964
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05c84763696610e4d8002ab1559821a0, type: 3}
       propertyPath: m_LocalScale.z
-      value: -719.0692
+      value: -1035.3159
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05c84763696610e4d8002ab1559821a0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2028,7 +2058,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 642867928}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
   m_Name: 
@@ -3383,6 +3413,7 @@ Transform:
   - {fileID: 626751126}
   - {fileID: 132840751}
   - {fileID: 1791238111}
+  - {fileID: 102566980}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3401,6 +3432,7 @@ MonoBehaviour:
   destinationPosition: {x: 0, y: 0, z: -6}
   destinationDuration: 2
   luggageCarryPoint: {fileID: 1791238111}
+  luggageCarryPoint2: {fileID: 102566980}
 --- !u!1 &1173756739
 GameObject:
   m_ObjectHideFlags: 0
@@ -3669,8 +3701,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  radius: 10
-  power: 500
+  radius: 100
+  power: 100000
   explosionDelay: 0
 --- !u!4 &1299404849
 Transform:
@@ -4207,8 +4239,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1526838740}
-  m_LocalRotation: {x: 0.3971479, y: 0, z: 0, w: 0.91775465}
-  m_LocalPosition: {x: 0, y: 18.964828, z: -9.41}
+  m_LocalRotation: {x: 0.1924481, y: -0.40997553, z: 0.088938795, w: 0.8871154}
+  m_LocalPosition: {x: 68.7, y: 32.81, z: -33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4632,7 +4664,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1791238110}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.13, y: 1.98, z: 0}
+  m_LocalPosition: {x: 6.13, y: 0.03, z: 0.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1169917682}
